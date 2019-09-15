@@ -6,7 +6,7 @@ enable secret SenhaEnable
 ip domain-name peachanddaisy.local
 crypto key generate rsa general-keys modulus 1024
 username Leonardo privilege 15 secret leozin
-username estagiario privilege 1 secret leozin
+username estagiario privilege 1 secret leozinho
 line console 0
 password SenhadaConsole
 login
