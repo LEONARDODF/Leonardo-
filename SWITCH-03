@@ -1,0 +1,76 @@
+enable
+configure terminal
+hostname S3
+banner motd "ACESSO AUTORIZADO PARA O TI!"
+enable secret SenhaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+username Leonardo privilege 15 secret leozin
+username estagiario privilege 1 secret leozinho
+line console 0
+password SenhadaConsole
+login
+exit
+service password-encryption
+line vty 0 15
+password SenhadaVTY
+transport input ssh
+exec-timeout 10
+login local
+exit
+vlan 80
+name FINANCAS
+exit
+vlan 60
+name OPERACOES
+exit
+vlan 88
+name RELOGIOS
+exit 
+vlan 100
+name LIVRE
+exit
+interface F0/1
+switchport mode access
+switchport access vlan 80
+exit
+interface vlan 80
+ip address 192.168.32.3 255.255.252.0
+description REDE 3
+no shutdown
+exit
+interface F0/6
+switchport mode access
+switchport access vlan 60
+exit
+interface vlan 60
+ip address 192.168.36.3 255.255.254.0
+description REDE 3
+no shutdown 
+exit
+interface F0/10
+switchport mode access
+switchport access vlan 88
+exit
+interface vlan 88
+ip address 192.168.38.3 255.255.255.0
+description REDE 3
+no shutdown 
+exit
+interface F0/20
+switchport mode access
+switchport access vlan 100
+exit
+interface vlan 100
+ip address 192.168.39.3 255.255.255.192
+description REDE 3
+no shutdown 
+exit
+interface G0/1
+switchport mode trunk
+switchport trunk native vlan 88
+switchport trunk allowed vlan 80,60,88,100
+no shutdown
+exit
+ip default-gateway 192.168.32.1
+do wr
