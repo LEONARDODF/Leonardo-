@@ -1,0 +1,78 @@
+enable
+configure terminal
+hostname R2
+banner motd "ACESSO PARA PESSOAS AUTORIZADAS“
+enable secret SenhaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+line vty 0 15
+password SenhadaVTY
+login
+transport input ssh
+exec-timeout 10
+exit
+username Leonardo privilege 15 secret leozin
+username Estagiario privilege 1 secret leozinho
+line console 0
+password SenhadaConsole
+login
+exit
+service password-encryption
+interface gigabitEthernet 0/1.50
+encapsulation dot1Q 50
+ip address 10.0.0.1 255.255.128.0
+description REDE 10.0.0.0/17
+no shutdown
+exit
+interface gigabitEthernet 0/1.60
+encapsulation dot1Q 60
+ip address 10.0.128.1 255.255.224.0
+description REDE 10.0.128.0/19
+no shutdown
+exit
+interface gigabitEthernet 0/1.70
+encapsulation dot1Q 70
+ip address 10.0.160.1 255.255.248.0
+description REDE 10.0.160.0/21
+no shutdown
+exit
+interface gigabitEthernet 0/1.80
+encapsulation dot1Q 80
+ip address 10.0.168.1 255.255.254.0
+description REDE 10.0.168.0/23
+no shutdown
+exit
+interface serial 0/0/1
+ip address 201.187.89.6 255.255.255.252
+description REDE 201.187.89.4/30
+no shutdown
+interface serial 0/1/1
+ip address 201.187.89.17 255.255.255.252
+description REDE 201.187.89.16/30
+no shutdown
+interface serial 0/0/0
+ip address 201.187.89.9 255.255.255.252
+description REDE 201.187.89.8/30
+no shutdown
+exit
+ip route 192.168.0.0 255.255.224.0 201.187.89.2
+ip route 192.168.0.0 255.255.224.0 201.187.89.5
+ip route 192.168.0.0 255.255.224.0 201.187.89.10
+ip route 172.16.0.0 255.240.0.0 201.187.89.2
+ip route 172.16.0.0 255.240.0.0 201.187.89.5
+ip route 172.16.0.0 255.240.0.0 201.187.89.10
+ip route 192.168.32.0 255.255.248.0 201.187.89.2
+ip route 192.168.32.0 255.255.248.0 201.187.89.5
+ip route 192.168.32.0 255.255.248.0 201.187.89.10
+ip route 201.187.89.20 255.255.255.252 201.187.89.2
+ip route 201.187.89.20 255.255.255.252 201.187.89.5
+ip route 201.187.89.20 255.255.255.252 201.187.89.10
+ip route 201.187.89.0 255.255.255.252 201.187.89.2
+ip route 201.187.89.0 255.255.255.252 201.187.89.5
+ip route 201.187.89.0 255.255.255.252 201.187.89.10
+ip route 201.187.89.12 255.255.255.252 201.187.89.2
+ip route 201.187.89.12 255.255.255.252 201.187.89.5
+ip route 201.187.89.12 255.255.255.252 201.187.89.10
+interface g0/1
+no shutdown
+do wr
