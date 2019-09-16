@@ -1,0 +1,76 @@
+enable
+configure terminal
+hostname S4
+banner motd "ACESSO AUTORIZADO PARA O TI!"
+enable secret SenhaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+username Leonardo privilege 15 secret leozin
+username estagiario privilege 1 secret leozinho
+line console 0
+password SenhadaConsole
+login
+exit
+service password-encryption
+line vty 0 15
+password SenhadaVTY
+transport input ssh
+exec-timeout 10
+login local
+exit
+vlan 88
+name SERVIDORES
+exit
+vlan 200
+name VOZ
+exit
+vlan 90
+name TACACS
+exit 
+vlan 88
+name MONITORAMENTO
+exit
+interface F0/1
+switchport mode access
+switchport access vlan 88
+exit
+interface vlan 88
+ip address 172.24.0.3 255.252.0.0
+description REDE 4
+no shutdown
+exit
+interface F0/10
+switchport mode access
+switchport access vlan 200
+exit
+interface vlan 200
+ip address 172.28.0.3 255.255.128.0
+description REDE 4
+no shutdown 
+exit
+interface F0/13
+switchport mode access
+switchport access vlan 90
+exit
+interface vlan 90
+ip address 172.28.128.3 255.255.254.0
+description REDE 4
+no shutdown 
+exit
+interface F0/15
+switchport mode access
+switchport access vlan 88
+exit
+interface vlan 88
+ip address 172.16.0.3 255.248.0.0
+description REDE 4
+no shutdown 
+exit
+interface G0/1
+switchport mode trunk
+switchport trunk native vlan 88
+switchport trunk allowed vlan 88,200,90,88
+no shutdown
+exit
+ip default-gateway 172.16.0.1
+do wr
