@@ -1,0 +1,76 @@
+enable
+configure terminal
+hostname S2
+banner motd "ACESSO AUTORIZADO PARA O TI!"
+enable secret SenhaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+username Leonardo privilege 15 secret leozin
+username estagiario privilege 1 secret leozinho
+line console 0
+password SenhadaConsole
+login
+exit
+service password-encryption
+line vty 0 15
+password SenhadaVTY
+transport input ssh
+exec-timeout 10
+login local
+exit
+vlan 50
+name ANALISTAS
+exit
+vlan 60
+name OPERACAO
+exit
+vlan 70
+name TI
+exit 
+vlan 80
+name ADMINISTRATIVO
+exit
+interface F0/1
+switchport mode access
+switchport access vlan 50
+exit
+interface vlan 50
+ip address 10.0.0.3 255.255.128.0
+description REDE 2
+no shutdown
+exit
+interface F0/24
+switchport mode access
+switchport access vlan 60
+exit
+interface vlan 60
+ip address 10.0.128.3 255.255.224.0
+description REDE 2
+no shutdown 
+exit
+interface F0/21
+switchport mode access
+switchport access vlan 70
+exit
+interface vlan 70
+ip address 10.0.160.3 255.255.248.0
+description REDE 2
+no shutdown 
+exit
+interface F0/22
+switchport mode access
+switchport access vlan 80
+exit
+interface vlan 80
+ip address 10.0.168.3 255.255.254.0
+description REDE 2
+no shutdown 
+exit
+interface G0/1
+switchport mode trunk
+switchport trunk native vlan 88
+switchport trunk allowed vlan 50,60,70,80
+no shutdown
+exit
+ip default-gateway 10.0.0.1
+do wr
