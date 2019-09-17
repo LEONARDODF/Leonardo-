@@ -1,0 +1,8 @@
+login block-for 180 attempts 3 within 180
+security passwords min-length 8
+crypto key generate rsa general-keys modulus 1024
+line vty 0 15
+transport input ssh
+login local
+exec-timeout 10
+do wr
