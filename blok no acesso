@@ -1,3 +1,9 @@
+*CONFIGURAR COM OS DADOS CERTOS DA REDE PRINCIPAL*
+
+enable
+configure terminal
+ip domain-name senai.local
+username leonardo privilege 15 secret senha
 login block-for 180 attempts 3 within 180
 security passwords min-length 8
 crypto key generate rsa general-keys modulus 1024
